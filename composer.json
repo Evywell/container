@@ -1,0 +1,22 @@
+{
+    "name": "evywell/service_container",
+    "authors": [
+        {
+            "name": "Evywell",
+            "email": "leduc.axel.pro@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Raven\\Container\\" : "./src/",
+            "Tests\\" : "./tests/"
+        }
+    },
+    "require": {
+        "psr/container": "^1.0",
+        "squizlabs/php_codesniffer": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    }
+}

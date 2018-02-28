@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="Raven Sources">
+    <description></description>
+    <arg name="colors"></arg>
+    <arg value="p"></arg>
+    <file>src</file>
+
+    <rule ref="PSR2"></rule>
+</ruleset>
