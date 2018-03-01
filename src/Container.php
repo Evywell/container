@@ -53,12 +53,27 @@ class Container implements ContainerInterface
         return $this->resolve($definition, self::DEFINITION_DEFAULT);
     }
 
+    /**
+     * Find the parameter of the container by its identifier and returns it.
+     *
+     * @param string $id
+     * @return array|mixed
+     */
     public function getParameter(string $id)
     {
         $definition = $this->getDefinition($id, self::DEFINITION_PARAMETER);
         return $this->resolveParameter($definition);
     }
 
+    /**
+     * Add a new entry in the container.
+     *
+     * @param string $id
+     * @param $entry
+     * @param array $parameters
+     * @param string $type
+     * @return Definition
+     */
     public function addDefinition(
         string $id,
         $entry,
@@ -71,11 +86,25 @@ class Container implements ContainerInterface
         return $definition;
     }
 
+    /**
+     * Add a new parameter in the container.
+     *
+     * @param string $id
+     * @param $parameter
+     */
     public function addParameter(string $id, $parameter): void
     {
         $this->addDefinition($id, $parameter, [], self::DEFINITION_PARAMETER);
     }
 
+    /**
+     * Finds a definition by its identifier.
+     *
+     * @param string $id
+     * @param string $type
+     * @return Definition
+     * @throws ContainerNotFoundException
+     */
     public function getDefinition(string $id, string $type = self::DEFINITION_DEFAULT): Definition
     {
         // Si un alias porte cet id, on le prend en priorité
@@ -90,6 +119,13 @@ class Container implements ContainerInterface
         throw new ContainerNotFoundException($id);
     }
 
+    /**
+     * Finds all definitions identified by the given key.
+     *
+     * @param string $key
+     * @return mixed
+     * @throws ContainerException
+     */
     public function getDefinitions(string $key = self::DEFINITION_DEFAULT)
     {
         if ($this->keyExists($key)) {
@@ -98,6 +134,11 @@ class Container implements ContainerInterface
         throw new ContainerException(sprintf("The key %s does not exist", $key));
     }
 
+    /**
+     * Get all definition keys
+     *
+     * @return array
+     */
     public function getDefinitionKeys(): array
     {
         return array_keys($this->definitions);
