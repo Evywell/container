@@ -315,6 +315,8 @@ class Container implements ContainerInterface
         $entry = $parameterDefinition->getEntry();
         $parameter = $this->parseParameter($entry);
 
+        $this->instances[self::DEFINITION_PARAMETER][$parameterDefinition->getId()] = $parameter;
+
         // On marque la définition comme résolue
         $parameterDefinition->setResolved(true);
         return $parameter;
