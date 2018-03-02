@@ -24,10 +24,16 @@ class ConfigurationFileTest extends TestCase
      */
     private $resolver;
 
+    /**
+     * @var array
+     */
+    private $definitions;
+
     public function setUp()
     {
         $this->container = new Container();
         $this->resolver = new ConfigurationResolver($this->container);
+        $this->definitions = require 'definitions.php';
     }
 
     public function testResolveParameters()
@@ -48,8 +54,7 @@ class ConfigurationFileTest extends TestCase
 
     public function testResolveDefinitions()
     {
-        $definitions = require 'definitions.php';
-        $this->resolver->resolveConfigurationDefinitions($definitions);
+        $this->resolver->resolveConfigurationDefinitions($this->definitions);
         $simple = $this->container->get('simple');
         $this->assertInstanceOf(SimpleClass::class, $simple);
         $simpleInterface = $this->container->get(SimpleInterface::class);
@@ -72,8 +77,7 @@ class ConfigurationFileTest extends TestCase
 
     public function testResolveDefinitionsWithAlias()
     {
-        $definitions = require 'definitions.php';
-        $this->resolver->resolveConfigurationDefinitions($definitions);
+        $this->resolver->resolveConfigurationDefinitions($this->definitions);
 
         $simple = $this->container->get('simpleWithAlias');
         $this->assertInstanceOf(SimpleClass::class, $simple);
@@ -81,6 +85,16 @@ class ConfigurationFileTest extends TestCase
         $alias = $this->container->get('simpleAlias');
         $this->assertInstanceOf(SimpleClass::class, $alias);
 
+    }
+
+    public function testResolveDefinitionsWithTags()
+    {
+        $this->resolver->resolveConfigurationDefinitions($this->definitions);
+        $instances = $this->container->getIdsWithTag('si');
+        $this->assertEquals(['a', 'b', 'c'], $instances);
+        $this->assertInstanceOf(SimpleClass::class, $this->container->get($instances[0]));
+        $this->assertInstanceOf(ConstructorClass::class, $this->container->get($instances[1]));
+        $this->assertInstanceOf(ConstructorClassTwo::class, $this->container->get($instances[2]));
     }
 
 
