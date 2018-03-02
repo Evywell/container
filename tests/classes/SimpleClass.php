@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Classes;
 
-class SimpleClass
+class SimpleClass implements SimpleInterface
 {
 
 }

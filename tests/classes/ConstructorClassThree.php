@@ -12,7 +12,7 @@ class ConstructorClassThree
      */
     private $class;
 
-    public function __construct(SimpleClass $class)
+    public function __construct(SimpleInterface $class)
     {
         $this->class = $class;
     }

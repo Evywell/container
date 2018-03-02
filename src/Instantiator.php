@@ -40,7 +40,12 @@ class Instantiator implements InstantiatorInterface
                     } elseif ($parameter->isDefaultValueAvailable()) {
                         return $parameter->getDefaultValue();
                         // Si le paramètre est une classe, on tente de l'instancier
-                    } elseif ($recursive && class_exists($type = (string) $parameter->getType())) {
+                    } elseif ($recursive &&
+                        (
+                            class_exists($type = (string) $parameter->getType()) ||
+                            interface_exists($type = (string) $parameter->getType())
+                        )
+                    ) {
                         // Si le container possède cette instance
                         if ($this->container->has($type)) {
                             return $this->container->get($type);

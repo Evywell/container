@@ -14,6 +14,7 @@ use Tests\Classes\ConstructorClassFour;
 use Tests\Classes\ConstructorClassThree;
 use Tests\Classes\ConstructorClassTwo;
 use Tests\Classes\SimpleClass;
+use Tests\Classes\SimpleInterface;
 
 class InstantiatorTest extends TestCase
 {
@@ -59,7 +60,7 @@ class InstantiatorTest extends TestCase
 
     public function testInstanciateClassWithConstructorClass()
     {
-        $this->container->addDefinition(SimpleClass::class, SimpleClass::class);
+        $this->container->addDefinition(SimpleInterface::class, SimpleClass::class);
         /** @var ConstructorClassThree $instance */
         $instance = $this->instantiator->resolve(ConstructorClassThree::class);
         $this->assertInstanceOf(ConstructorClassThree::class, $instance);
