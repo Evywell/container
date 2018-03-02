@@ -70,5 +70,18 @@ class ConfigurationFileTest extends TestCase
         $this->assertInstanceOf(ConstructorClassThree::class, $constructorThree);
     }
 
+    public function testResolveDefinitionsWithAlias()
+    {
+        $definitions = require 'definitions.php';
+        $this->resolver->resolveConfigurationDefinitions($definitions);
+
+        $simple = $this->container->get('simpleWithAlias');
+        $this->assertInstanceOf(SimpleClass::class, $simple);
+
+        $alias = $this->container->get('simpleAlias');
+        $this->assertInstanceOf(SimpleClass::class, $alias);
+
+    }
+
 
 }

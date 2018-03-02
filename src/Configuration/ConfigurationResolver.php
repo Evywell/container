@@ -45,8 +45,32 @@ class ConfigurationResolver
             }
             $abstract = isset($definition[0]) ? $definition[0] : null;
             $parameters = isset($definition[1]) ? $definition[1] : [];
+            $options = isset($definition[2]) ? $definition[2] : [];
 
-            $this->container->addDefinition($id, $abstract, $parameters);
+            $definition = $this->container->addDefinition($id, $abstract, $parameters);
+
+            // Gestion des options
+            if (array_key_exists('alias', $options)) {
+                $aliases = (array) $options['alias'];
+                foreach ($aliases as $alias) {
+                    $this->container->addAlias($alias, $definition);
+                }
+            }
+
+            if (array_key_exists('tags', $options)) {
+                $tags = (array) $options['tags'];
+                foreach ($tags as $tag) {
+                    $definition->addTag($tag);
+                }
+            }
+
+            if (array_key_exists('factory', $options)) {
+                if ($options['factory']) {
+                    $definition->setFactory(true);
+                } else {
+                    $definition->setFactory(false);
+                }
+            }
         }
     }
 

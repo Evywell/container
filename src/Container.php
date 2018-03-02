@@ -47,7 +47,7 @@ class Container implements ContainerInterface
         $definition = $this->getDefinition($id);
         // Si la définition est déjà résolu, on renvoie l'instance
         if ($definition->isResolved()) {
-            return $this->instances[self::DEFINITION_DEFAULT][$id];
+            return $this->instances[self::DEFINITION_DEFAULT][$definition->getId()];
         }
         // On résout l'instance
         return $this->resolve($definition, self::DEFINITION_DEFAULT);
