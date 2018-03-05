@@ -394,7 +394,7 @@ class Container implements ContainerInterface
             // Si le string est une classe
             if (class_exists($entry)) {
                 // On tente de résoudre la classe
-                if (!$instance = $this->instantiator->resolve($entry, $definitionParameters)) {
+                if (!$instance = $this->instantiator->resolveConstructor($entry, $definitionParameters)) {
                     throw new ContainerException(sprintf("%s is not a valid class", $entry));
                 }
             }
